@@ -27,6 +27,7 @@ var std = L.tileLayer(
   });
 
 var map = L.map('mapdiv', {
+  center: [35.3622222, 138.7313889], zoom: 5,
   layers: [std]});
 
 var hash = L.hash(map);
