@@ -25,13 +25,20 @@ var std = L.tileLayer(
   'http://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
     attribution: "地理院タイル（標準地図）"
   });
+var osm = L.tileLayer(
+  'http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+    attribution: 'map data (c) OpenStreetMap contributors'
+  });
 
 var map = L.map('mapdiv', {
   center: [32.9788, 130.0668], zoom: 15,
   layers: [std]});
 
 var hash = L.hash(map);
-L.control.layers({'地理院タイル（標準地図）': std}).addTo(map);
+L.control.layers({
+  '地理院タイル（標準地図）': std,
+  "<a href='http://qiita.com/nyampire/items/fbe359a2c9ccf0116787'>OSM日本</a>'": osm
+}).addTo(map);
 
 var el = L.control.elevation({
   position: 'bottomleft',
