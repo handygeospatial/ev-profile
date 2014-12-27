@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ev-profile: Elevation Profile with GeoJSON</title>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+<link rel="stylesheet" href="Leaflet.Elevation-0.0.2.css"/>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/leaflet-hash.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/TileLayer.GeoJSON.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/corslite.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="Leaflet.Elevation-0.0.2.min.js"></script>
+<style>
+body {padding: 0; margin: 0}
+html, body, #mapdiv {height: 100%; width: 100%;}
+.leaflet-container {background: #fff;}
+</style>
+</head>
+<body>
+<div id="mapdiv">
+<script>
+var std = L.tileLayer(
+  'http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+    attribution: "地理院タイル（淡色地図）"
+  });
+
+var map = L.map('mapdiv', {
+  layers: [std]});
+
+var hash = L.hash(map);
+L.control.layers({'地理院タイル（淡色地図）': std}).addTo(map);
+
+var el = L.control.elevation({
+  position: 'bottomleft',
+  theme: 'purple-theme',
+  interpolation: 'basis'
+});
+el.addTo(map);
+
+L.geoJson({
+  'type': 'FeatureCollection',
+  'features': [
+  {
+    'type': 'Feature',
+    'geometry': {
+      'type': 'LineString',
+      'coordinates': [
+      [135.78279, 34.99945, 89.2],
+      [135.77983, 34.99928, 59.1],
+      [135.77731, 34.99936, 49.0],
+      [135.77699, 34.99764, 51.1],
+      [135.77472, 34.99766, 41.3],
+      [135.77368, 34.99780, 38.2],
+      [135.77208, 34.99850, 35.8],
+      [135.76976, 34.99887, 35.9]
+      ]
+    }
+  }
+  ]
+  }, {
+  onEachFeature: el.addData.bind(el)
+}).addTo(map);
+</script>
+</body>
+</html>
